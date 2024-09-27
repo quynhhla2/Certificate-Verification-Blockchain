@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/loader.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="./css/aos.min.css" rel="stylesheet" />
+    <script src="./js/aos.js"></script>
+    <script src="node_modules\web3\dist\web3.min.js"></script>
+    <script src="js/App.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="./assets/images/icon.png" />
+    <title>Verfiy Document</title>
+  </head>
+  <body>
+    <!-- loading Circular dots... -->
+    <div class="loader-wraper">
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+
+    <!-- navigation bar -->
+    <nav>
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="Header">
+          <div class="spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <ul class="menu">
+            <li>
+              <a class="link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li>
+              <a class="link" href="upload.html">Tải lên</a>
+            </li>
+            <li>
+              <a class="link" href="verify.html">Xác thực</a>
+            </li>
+            <li>
+              <a class="link" href="delete.html">Xóa</a>
+            </li>
+
+            <li>
+              <a class="link" href="admin.html">Admin</a>
+            </li>
+            <!-- <li>
+              <a class="link" href="about.html">Về Trang Chủ</a>
+            </li> -->
+          </ul>
+          <div class="d-flex">
+            <button
+              id="loginButton"
+              onclick="connect()"
+              class="btn main-button"
+            >
+              Đăng nhập
+            </button>
+            <button
+              id="logoutButton"
+              onclick="disconnect()"
+              class="btn main-button"
+            >
+              Đăng xuất
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <!-- upload form -->
+      <div data-aos="zoom-in" class="col p-3 data-upload my-3 mx-md-2 field">
+        <input onchange="get_Sha3()" id="doc-file" type="file" />
+        <span id="note" class="text-danger"></span>
+        <img id="loader" src="files/loader.svg" alt="loader" />
+        <input
+          onclick="verify_Hash()"
+          class="btn mt-5 upload-button d-block main-button button1"
+          type="button"
+          value="Xác thực"
+          id="upload_file_button"
+        />
+      </div>
+      <!-- Verification result -->
+      <div class="box d-none my-3 row gx-0 mx-md-2 transaction-status col-lg">
+        <div class="left col-lg-6 p-3 d-flex flex-column">
+          <span class="p-2 info text-center" id="doc-status"></span>
+          <span class="p-2 info" id="file-hash"></span>
+          <span class="p-2 info" id="contract-address"></span>
+          <span class="p-2 info" id="time-stamps"></span>
+          <span class="p-2 info" id="blockNumber"></span>
+          <span class="p-2 info" id="college-name"></span>
+
+          <span class="d-flex justify-content-center">
+            <a
+              title="View Cirtificate on IPFS"
+              href="#"
+              id="download-document"
+              class="download-link"
+              target="_blank"
+            >
+              Xem chứng chỉ
+            </a>
+          </span>
+        </div>
+        <div
+          class="right col-lg-6 d-flex justify-content-center align-items-center"
+        >
+          <!-- <object class="mt-4"  id="student-document" data="" alt="student-document"></object> -->
+          <img class="mt-4" id="student-document" alt="Student document" />
+        </div>
+      </div>
+    </div>
+    <footer class="footer-dark">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 col-md-3 item">
+            <h3>Dịch vụ</h3>
+            <ul>
+              <li><a href="#">Ethereum</a></li>
+              <li><a href="#">Blockchain Tech.</a></li>
+              <li><a href="#">Smart Contracts</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-6 col-md-3 item">
+            <h3>Về chúng tôi</h3>
+            <ul>
+              <li><a href="#">Công ty</a></li>
+              <li><a href="#">Team</a></li>
+            </ul>
+          </div>
+          <div class="col-md-6 item text">
+            <h3>
+              <!-- <i class="fa-solid fa-dragon"></i> -->
+              CVChain
+            </h3>
+            <!-- <a href="https://www.flaticon.com/free-icons/blockchain" title="blockchain icons">Blockchain icons created by photo3idea_studio - Flaticon</a> -->
+            <p>
+              Hệ thống xác thực văn bằng chứng chỉ dựa trên công nghệ blockchain, cung cấp giải pháp hiệu quả cho việc xác minh tính hợp lệ của các tài liệu giáo dục.
+            </p>
+          </div>
+          <div class="col-md text-center text-md-start">
+            <h3>Điều khoản</h3>
+            <ul>
+              <li>
+                <a
+                  href="https://undraw.co/illustrations"
+                  title="Indraw illustrations"
+                >
+                Minh họa về blockchain được tạo bởi undraw
+                </a>
+              </li>
+              <li>
+                <a href="https://www.freepik.com/vectors/futuristic-background">
+                  Vector hình ảnh được tạo bởi freepik -
+                  www.freepik.com
+                </a>
+              </li>
+              <!-- <li>
+                <a href="https://www.freepik.com/vectors/tech-world">
+                  Tech world vector created by liuzishan - www.freepik.com
+                </a>
+              </li> -->
+              <li>
+                <a
+                  href="https://unsplash.com/@theshubhamdhage?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+                >
+                  Hình ảnh tạo bởi Freepik
+                </a>
+                on
+                <a
+                  href="https://unsplash.com/s/photos/blockchain?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+                >
+                  Unsplash
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.flaticon.com/free-icons/wings"
+                  title="wings icons"
+                >
+                  Icons được tạo bởi Freepik - Flaticon
+                </a>
+              </li>
+              <li>
+                <a href="https://loading.io/icon/">
+                  Icon Loading được tạo bởi loading.io
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col item social">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-github"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+        <p class="copyright">CVChain © 2024</p>
+      </div>
+    </footer>
+    <div>
+      <a
+        title="Send Email"
+        href="mailto:devaloshe@gmail.com?subject=From CVChain Site"
+      >
+        <i class="mail-us fa-solid fa-headset"></i>
+      </a>
+    </div>
+    <i onclick="topFunction()" id="scroll-btn" class="fa-solid fa-angle-up"></i>
+    <script src="./js/script.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
